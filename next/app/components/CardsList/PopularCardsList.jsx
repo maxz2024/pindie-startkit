@@ -1,10 +1,12 @@
+import Styles from "./CardsList.module.css"
+
 export const PopularCardList = () => {
   return (
-    <section className="list-section">
-      <h2 className="list-section__title" id="popular">
+    <section className={Styles["list-section"]}>
+      <h2 className={Styles["list-section__title"]} id="new">
         Популярное
       </h2>
-      <ul className="cards-list">
+      <ul className={Styles["cards-list"]}>
         <li className="cards-list__item">
           <a href="/game-id.html" className="card-list__link">
             <article className="card">
