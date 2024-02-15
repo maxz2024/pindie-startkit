@@ -1,5 +1,5 @@
 import Styles from './CardsList.module.css'
-import { NewCardFrament } from './NewCardFragment'
+import { NewCard } from './NewCard'
 
 export const NewCardList = (props) => {
   return (
@@ -8,21 +8,13 @@ export const NewCardList = (props) => {
         Новинки
       </h2>
       <ul className={Styles["cards-list"]}>
-        <NewCardFrament
+        <NewCard
           url="https://code.s3.yandex.net/teens/pindie-games/go-away/cover.jpg" name="Go Away" description="Управляй автомобилем, избегая аварий и перепрыгивая препятствия на пути к следующему уровню." author_name="Mahisto" voice="20"
         />
-        <NewCardFrament url="https://code.s3.yandex.net/teens/pindie-games/gunner/cover.png" name="G.U.N.N.E.R." description="Продержись как можно дольше, отбиваясь от врагов, которых будет становиться всё больше." author_name="IDKWIAm" voice="10"
+        <NewCard url="https://code.s3.yandex.net/teens/pindie-games/gunner/cover.png" name="G.U.N.N.E.R." description="Продержись как можно дольше, отбиваясь от врагов, которых будет становиться всё больше." author_name="IDKWIAm" voice="10"
         />
-        {/* <li className="cards-list__item">
-          <a href="/game-id.html" className="card-list__link">
-            <article className="card">
-              <img
-                src="https://code.s3.yandex.net/teens/pindie-games/space-terror/cover.png"
-                alt=""
-                className="card__image"
-              />
-              <div className="card__content-block">
-                <h3 className="card__title">Space Terror</h3>
+        <NewCard url="https://code.s3.yandex.net/teens/pindie-games/space-terror/cover.png"
+          name="Space Terror"
                 <p className="card__description">
                   Лети как можно дальше в космическом пространстве, уничтожая всё на своём пути.
                 </p>

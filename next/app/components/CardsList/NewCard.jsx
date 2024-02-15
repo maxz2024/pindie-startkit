@@ -1,6 +1,6 @@
 import Styles from './CardsList.module.css'
 
-export const NewCardFrament = (props) => {
+export const NewCard = (props) => {
     return (
         <li className="cards-list__item">
             <a href="/game-id.html" className={Styles["card-list__link"]}>
