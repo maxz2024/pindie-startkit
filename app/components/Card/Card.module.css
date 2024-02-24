@@ -64,20 +64,7 @@
 }
 
 @media (width <=1440px) {
-    .cards-list {
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 40px;
-    }
-
-    .list-section__title {
-        font-size: 26px;
-    }
-
-    .list-section__title::before {
-        width: 55px;
-        height: 42px;
-    }
-
+    
     .card__content-block {
         padding: 16px 16px 26px;
     }
