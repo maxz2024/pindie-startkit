@@ -1,13 +1,7 @@
 import Styles from './CardsList.module.css'
-import { PopularCardFragment } from './PopularCardFragment'
-import { NewCardsFragment } from './NewCardFragmet'
-import { popularGames, newGames } from '@/app/data/data'
 import { Card } from '../Card/Card'
 
 export const CardList = (props) => {
-  const targetArray =
-    props.id === "popular" ? popularGames : props.id === "new" && newGames;
-
   return (
     <section className={Styles["list-section"]}>
       <h2 className={Styles["list-section__title"]} id={props.id}>{props.title}</h2>

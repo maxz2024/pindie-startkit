@@ -7,8 +7,6 @@ export const metadata = {
   description: "Портал инди-игр от студентов Яндекс Практикума",
 };
 
-
-
 export default function RootLayout({ children }) {
   return (
     <html lang="ru">
