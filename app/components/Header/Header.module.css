@@ -35,6 +35,11 @@
   width: 100%;
 }
 
+.menu__link_active {
+  background-color: #ffff00;
+  pointer-events: none;
+}
+
 .menu__item {
   display: flex;
   width: 100%;

@@ -1,6 +1,6 @@
 import Styles from './Card.module.css'
 
-export const Card = ({image, description, title, authorName, users}) => {
+export const Card = ({image, description, title, developer, users}) => {
   console.log(image)
   return (
     <article className={Styles["card"]}>
@@ -16,7 +16,7 @@ export const Card = ({image, description, title, authorName, users}) => {
         </p>
         <div className={Styles["card__info-container"]}>
           <p className={Styles["card__author"]}>
-            Автор: <span className={Styles["card__accent"]}>{authorName}</span>
+            Автор: <span className={Styles["card__accent"]}>{developer}</span>
           </p>
           <p className={Styles["card__votes"]}>
             Голосов на сайте: <span className={Styles["card__accent"]}>{users.length}</span>
