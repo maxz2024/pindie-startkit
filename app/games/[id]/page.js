@@ -1,9 +1,12 @@
 'use client'
 import { getGameById } from "@/app/data/data-utils";
 import Styles from "./Game.module.css";
+import { GameNotFound } from "@/app/components/GameNotFound/GameNotFound";
+import { useRouter } from "next/navigation";
 
 export default function GamePage(props) {
   const game = getGameById(props.params.id)
+  const authRouter = useRouter()
   {
     if (game) {
       return (
@@ -21,7 +24,7 @@ export default function GamePage(props) {
             </div>
             <div className={Styles["about__vote"]}>
               <p className={Styles["about__vote-amount"]}>За игру уже проголосовали: <span className={Styles["about__accent"]}>{game.users.length}</span></p>
-              <button onClick={() => { }} className={`button ${Styles["about__vote-button"]}`}>Голосовать</button>
+              <button onClick={() => authRouter.push("/login")} className={`button ${Styles["about__vote-button"]}`}>Голосовать</button>
             </div>
           </section>
         </>
@@ -29,7 +32,7 @@ export default function GamePage(props) {
     } else {
       return (
         <section className={Styles['game']}>
-          <p>Такой игры не существует 😢</p>
+          <GameNotFound />
         </section>
       )
     }
