@@ -19,17 +19,17 @@ export const Footer = () => {
         </Link>}
       <ul className={Styles["social-list"]}>
         <li className="social-list__item">
-          <a href="" className={`button ${Styles['social-list__link']}`}>
+          <a href="https://www.youtube.com/@YandexPracticum" className={`button ${Styles['social-list__link']}`}>
             YT
           </a>
         </li>
         <li className="social-list__item">
-          <a href="" className={`button ${Styles['social-list__link']}`}>
+          <a href="https://vk.com/yandex.practicum" className={`button ${Styles['social-list__link']}`}>
             ВК
           </a>
         </li>
         <li className="social-list__item">
-          <a href="https://t.me/maxz2024" className={`button ${Styles['social-list__link']}`}>
+          <a href="https://t.me/yndx_practicum" className={`button ${Styles['social-list__link']}`}>
             TG
           </a>
         </li>
