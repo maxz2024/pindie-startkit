@@ -22,12 +22,12 @@ export const Header = () => {
       {pathname === "/" ?
         <span className={Styles["logo"]}><img
           className={Styles["logo__image"]}
-          src="./images/logo.svg"
+          src="/images/logo.svg"
           alt="Логотип Pindie" /></span> :
         <Link href="/" className={Styles["logo"]}>
           <img
             className={Styles["logo__image"]}
-            src="./images/logo.svg"
+            src="/images/logo.svg"
             alt="Логотип Pindie"
           />
         </Link>}
