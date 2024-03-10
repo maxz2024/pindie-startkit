@@ -1,7 +1,8 @@
+"use client"
 import Styles from './Card.module.css'
 
-export const Card = ({image, description, title, developer, users}) => {
-  console.log(image)
+export const Card = (props) => {
+  const {image, description, title, developer, users} = props
   return (
     <article className={Styles["card"]}>
       <img

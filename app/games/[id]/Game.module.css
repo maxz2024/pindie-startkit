@@ -60,6 +60,11 @@
   font-size: 20px;
   letter-spacing: 6%;
 }
+.about__vote-button:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+ 
 
 @media (width <= 1200px) {
   .game {
