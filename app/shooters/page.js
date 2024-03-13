@@ -1,32 +1,17 @@
 "use client";
-import { getNormalizedGamesDataByCategory,isResponseOk } from "../api/api-utils";
 import { CardsList } from "../components/CardsList/CardsList";
 import { endpoints } from "../api/config";
 import { Preloader } from "../components/Preloader/Preloader";
-import { useState, useEffect } from "react";
+import { useGetDataByCategory } from "../api/api-hooks";
 
 export default function Shooters() {
-    const [shootersGames, setShootersGames] = useState(true);
-    const [preloaderVisible, setPreloaderVisible] = useState(true);
+  const shootersGames = useGetDataByCategory(endpoints.games, "shooter");
 
-    useEffect(() => {
-        async function fetchData() {
-        const shootersGames = await getNormalizedGamesDataByCategory(
-            endpoints.games,
-            "shooter"
-        );
-        isResponseOk(shootersGames) ? setShootersGames(shootersGames) : setShootersGames(null);
-        setPreloaderVisible(false);
-        }
-        fetchData();
-    }, []);
-    
-  return preloaderVisible ? (
-    <Preloader />
+  return shootersGames ? (
+    <main className={"main-inner"}>
+      <CardsList id="shooters" title="Шутеры" data={shootersGames} />
+    </main>
   ) : (
-        <main className={"main-inner"}>
-            <CardsList id="shooters" title="Шутеры" data={shootersGames} />
-        </main>
-    )
-
+    <Preloader />
+  );
 }

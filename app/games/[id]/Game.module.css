@@ -64,7 +64,6 @@
   opacity: 0.5;
   pointer-events: none;
 }
- 
 
 @media (width <= 1200px) {
   .game {

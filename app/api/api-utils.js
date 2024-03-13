@@ -1,8 +1,5 @@
-// "use client"
-import { data } from "../data/data";
-import { BASE_URL } from "./config";
-
-const getData = async (url, data) => {
+"use client"
+const getData = async (url) => {
   try {
     const response = await fetch(url);
     if (response.status !== 200) {

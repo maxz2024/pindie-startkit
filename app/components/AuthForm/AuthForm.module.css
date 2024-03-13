@@ -63,7 +63,7 @@
 }
 
 .form__reset:disabled {
-  opacity: .9;
+  opacity: 0.9;
   pointer-events: none;
 }
 
@@ -89,6 +89,6 @@
 }
 
 .form__submit:disabled {
-  opacity: .5;
+  opacity: 0.5;
   pointer-events: none;
 }

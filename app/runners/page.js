@@ -1,32 +1,17 @@
 "use client";
-import { getNormalizedGamesDataByCategory,isResponseOk } from "../api/api-utils";
 import { CardsList } from "../components/CardsList/CardsList";
 import { endpoints } from "../api/config";
 import { Preloader } from "../components/Preloader/Preloader";
-import { useState, useEffect } from "react";
+import { useGetDataByCategory } from "../api/api-hooks";
 
 export default function Runners() {
-    const [runnersGames, setRunnersGames] = useState(true);
-    const [preloaderVisible, setPreloaderVisible] = useState(true);
+  const runnersGames = useGetDataByCategory(endpoints.games, "runner");
 
-    useEffect(() => {
-        async function fetchData() {
-        const runnersGames = await getNormalizedGamesDataByCategory(
-            endpoints.games,
-            "runner"
-        );
-        isResponseOk(runnersGames) ? setRunnersGames(runnersGames) : setRunnersGames(null);
-        setPreloaderVisible(false);
-        }
-        fetchData();
-    }, []);
-    
-  return preloaderVisible ? (
-    <Preloader />
+  return runnersGames ? (
+    <main className={"main-inner"}>
+      <CardsList id="runners" title="Раннеры" data={runnersGames} />
+    </main>
   ) : (
-        <main className={"main-inner"}>
-            <CardsList id="runners" title="Раннеры" data={runnersGames} />
-        </main>
-    )
-
+    <Preloader />
+  );
 }
