@@ -1,13 +1,9 @@
-import Styles from "./CardsList.module.css";
-import { Card } from "../Card/Card";
 import Link from "next/link";
+import { Card } from "../Card/Card";
+import Styles from "@/app/components/CardsListSection/CardsListSection.module.css";
 
 export const CardsList = (props) => {
   return (
-    <section className={Styles["list-section"]}>
-      <h2 className={Styles["list-section__title"]} id={props.id}>
-        {props.title}
-      </h2>
       <ul className={Styles["cards-list"]}>
         {props.data.map((item) => {
           return (
@@ -22,6 +18,5 @@ export const CardsList = (props) => {
           );
         })}
       </ul>
-    </section>
   );
 };

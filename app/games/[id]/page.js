@@ -13,14 +13,13 @@ import { useState, useEffect } from "react";
 import Styles from "./Game.module.css";
 import { GameNotFound } from "@/app/components/GameNotFound/GameNotFound";
 import { Preloader } from "@/app/components/Preloader/Preloader";
+import { useStore } from "../../store/app-store";
 
 export default function GamePage(props) {
   const [game, setGame] = useState(null);
   const [preloaderVisible, setPreloaderVisible] = useState(true);
-  const [isAuthorized, setIsAuthorized] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
   const [isVoted, setIsVoted] = useState(false);
-
+  const authContext = useStore();
   // Загружаем информацию об игре
   useEffect(() => {
     async function fetchData() {
@@ -34,37 +33,21 @@ export default function GamePage(props) {
     fetchData();
   }, []);
 
-  // Получаем данные о пользователе и сохраняем их
-  useEffect(() => {
-    const jwt = getJWT();
-    if (jwt) {
-      getMe(endpoints.getMe, jwt).then((userData) => {
-        if (isResponseOk(userData)) {
-          setIsAuthorized(true);
-          setCurrentUser(userData);
-        } else {
-          setIsAuthorized(false);
-          removeJWT();
-        }
-      });
-    }
-  }, []);
-
   // Проверяем голос пользователя
   useEffect(() => {
-    if (currentUser && game) {
-      setIsVoted(checkIfUserVoted(game, currentUser.id));
+    if (authContext.user && game) {
+      setIsVoted(checkIfUserVoted(game, authContext.user.id));
     } else {
       setIsVoted(false);
     }
-  }, [currentUser, game]);
+  }, [authContext.user, game]);
 
   const handleVote = async () => {
-    const jwt = getJWT();
+    const jwt = authContext.token;
     let usersIdArray = game.users.length
       ? game.users.map((user) => user.id)
       : [];
-    usersIdArray.push(currentUser.id);
+    usersIdArray.push(authContext.user.id);
     const response = await vote(
       `${endpoints.games}/${game.id}`,
       jwt,
@@ -72,7 +55,7 @@ export default function GamePage(props) {
     );
     if (isResponseOk(response)) {
       setIsVoted(true);
-      setGame({ ...game, users: [...game.users, currentUser] });
+      setGame({ ...game, users: [...game.users, authContext.user] });
     }
   };
   return (
@@ -104,7 +87,7 @@ export default function GamePage(props) {
               </p>
               <button
                 className={`button ${Styles["about__vote-button"]}`}
-                disabled={!isAuthorized || isVoted}
+                disabled={!authContext.isAuth || isVoted}
                 onClick={handleVote}
               >
                 {isVoted ? "Голос учтён" : "Голосовать"}

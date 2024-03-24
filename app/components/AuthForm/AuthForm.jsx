@@ -3,11 +3,12 @@ import { endpoints } from "@/app/api/config";
 import Styles from "./AuthForm.module.css";
 import { useEffect, useState } from "react";
 import { authorize, getMe, isResponseOk, setJWT } from "@/app/api/api-utils";
+import { useStore } from "@/app/store/app-store";
 
 export const AuthForm = (props) => {
   const [authData, setAuthData] = useState({ identifier: "", password: "" });
-  const [userData, setUserData] = useState(null);
   const [message, setMessage] = useState({ status: null, text: null });
+  const authContext = useStore();
 
   const handleInput = (e) => {
     setAuthData({ ...authData, [e.target.name]: e.target.value });
@@ -20,13 +21,9 @@ export const AuthForm = (props) => {
     const userData = await authorize(endpoints.auth, authData);
     /* Проверяем ответ сервера с помощью isResponseOk */
     if (isResponseOk(userData)) {
-      /* Записываем в стейт данные пользователя с сервера */
-      setUserData(userData);
-      /*  */
-      props.setAuth(true);
+      authContext.login(userData.user, userData.jwt)
       /* Записываем сообщение об авторизации */
       setMessage({ status: "success", text: "Вы авторизовались!" });
-      setJWT(userData.jwt);
     } else {
       /* Записываем сообщение об ошибке */
       setMessage({ status: "error", text: "Неверные почта или пароль" });
@@ -34,14 +31,14 @@ export const AuthForm = (props) => {
   };
   useEffect(() => {
     let timer;
-    if (userData) {
+    if (authContext.user) {
       timer = setTimeout(() => {
-        /* В props close лежит функция закрытия попапа */
+        setMessage({ status: null, text: null });
         props.close();
       }, 1000);
     }
     return () => clearTimeout(timer);
-  }, [userData]);
+  }, [authContext.user]);
 
   return (
     <form className={Styles["form"]} onSubmit={handleSubmit}>
