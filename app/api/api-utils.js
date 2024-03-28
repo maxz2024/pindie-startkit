@@ -45,12 +45,12 @@ export const normalizeData = (data) => {
 
 export const getNormalizedGameDataById = async (url, id) => {
   const data = await getData(`${url}/${id}`);
-  return normalizeDataObject(data);
+  return isResponseOk(data) ? normalizeDataObject(data) : data;
 };
 
 export const getNormalizedGamesDataByCategory = async (url, category) => {
   const data = await getData(`${url}?categories.name=${category}`);
-  return normalizeData(data);
+  return isResponseOk(data) ? normalizeData(data) : data;
 };
 
 export const isResponseOk = (response) => {
