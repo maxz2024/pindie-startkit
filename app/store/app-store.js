@@ -8,7 +8,7 @@ export const useStore = create((set) => ({
   token: null,
   login: (user, token) => {
     /* С помощью функции set устанавливаем новое состояние хранилища */
-    set({ isAuth: true, user, token });
+    set({ isAuth: true, user: { ...user, id: user._id }, token: token });
     /* Записываем полученный токен */
     setJWT(token);
   },
@@ -24,7 +24,7 @@ export const useStore = create((set) => ({
       const user = await getMe(endpoints.getMe, jwt);
       if (user) {
         /* Сохраняем полученные данные и токен */
-        set({ isAuth: true, user, token: jwt });
+        set({ isAuth: true, user: { ...user, id: user._id }, token: jwt });
         setJWT(jwt);
       } else {
         /* Возвращаем изначальные состояния и удаляем токен */

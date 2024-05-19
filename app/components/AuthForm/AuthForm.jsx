@@ -6,7 +6,7 @@ import { authorize, getMe, isResponseOk, setJWT } from "@/app/api/api-utils";
 import { useStore } from "@/app/store/app-store";
 
 export const AuthForm = (props) => {
-  const [authData, setAuthData] = useState({ identifier: "", password: "" });
+  const [authData, setAuthData] = useState({ email: "", password: "" });
   const [message, setMessage] = useState({ status: null, text: null });
   const authContext = useStore();
 
@@ -21,7 +21,7 @@ export const AuthForm = (props) => {
     const userData = await authorize(endpoints.auth, authData);
     /* Проверяем ответ сервера с помощью isResponseOk */
     if (isResponseOk(userData)) {
-      authContext.login(userData.user, userData.jwt)
+      authContext.login({ ...userData, id: userData._id }, userData.jwt)
       /* Записываем сообщение об авторизации */
       setMessage({ status: "success", text: "Вы авторизовались!" });
     } else {
@@ -48,7 +48,7 @@ export const AuthForm = (props) => {
           <span className={Styles["form__field-title"]}>Email</span>
           <input
             className={Styles["form__field-input"]}
-            name="identifier"
+            name="email"
             onInput={handleInput}
             type="email"
             placeholder="hello@world.com"
