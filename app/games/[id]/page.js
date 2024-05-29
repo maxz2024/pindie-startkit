@@ -2,11 +2,8 @@
 import {
   getNormalizedGameDataById,
   isResponseOk,
-  getMe,
   checkIfUserVoted,
   vote,
-  getJWT,
-  removeJWT,
 } from "@/app/api/api-utils";
 import { endpoints } from "@/app/api/config";
 import { useState, useEffect } from "react";

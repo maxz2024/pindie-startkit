@@ -2,11 +2,11 @@
 import { endpoints } from "@/app/api/config";
 import Styles from "./AuthForm.module.css";
 import { useEffect, useState } from "react";
-import { authorize, getMe, isResponseOk, setJWT } from "@/app/api/api-utils";
+import { authorize, isResponseOk, setJWT } from "@/app/api/api-utils";
 import { useStore } from "@/app/store/app-store";
 
 export const AuthForm = (props) => {
-  const [authData, setAuthData] = useState({ email: "", password: "" });
+  const [authData, setAuthData] = useState({ login: "", password: "" });
   const [message, setMessage] = useState({ status: null, text: null });
   const authContext = useStore();
 
@@ -45,12 +45,12 @@ export const AuthForm = (props) => {
       <h2 className={Styles["form__title"]}>Авторизация</h2>
       <div className={Styles["form__fields"]}>
         <label className={Styles["form__field"]}>
-          <span className={Styles["form__field-title"]}>Email</span>
+          <span className={Styles["form__field-title"]}>Email, username</span>
           <input
             className={Styles["form__field-input"]}
-            name="email"
+            name="login"
             onInput={handleInput}
-            type="email"
+            type="type"
             placeholder="hello@world.com"
           />
         </label>

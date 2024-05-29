@@ -1,14 +1,12 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Styles from "./Header.module.css";
 import { Overlay } from "../Overlay/Overlay";
 import { Popup } from "../Popup/Popup";
 import { AuthForm } from "../AuthForm/AuthForm";
 import Link from "next/link";
-import { getJWT, getMe, isResponseOk, removeJWT } from "@/app/api/api-utils";
-import { endpoints } from "@/app/api/config";
 import { useStore } from "@/app/store/app-store";
 
 export const Header = () => {
