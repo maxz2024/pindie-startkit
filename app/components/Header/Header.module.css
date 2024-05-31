@@ -16,7 +16,20 @@
   align-self: center;
 }
 
+.avatar {
+  display: block;
+  padding: 20px 5px;
+  width: 148px;
+  min-width: 148px;
+  align-self: center;
+}
+
 .logo__image {
+  width: 100%;
+}
+
+.avatar__image{
+  border-radius: 100%;
   width: 100%;
 }
 

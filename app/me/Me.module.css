@@ -1,0 +1,68 @@
+@font-face {
+  font-family: 'Rubic One';
+  src: url(/fonts/rubic-one.woff);
+  font-display: swap;
+}
+
+.main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile {
+  display: block;
+  margin: 30px;
+  background-color: greenyellow;
+  width: 600px;
+  height: 300px;
+  border-radius:30px;
+}
+
+.applications {
+  display: block;
+  margin: 30px;
+  width: 600px;
+  height: 300px;
+  border-radius:30px;
+}
+.profile__container {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 20px;
+  padding-top: 10px;
+}
+
+.profile__right {
+  display: flex;
+  flex-direction: column;
+  /* padding-top: 50px; */
+  padding-right: 10px;
+  gap: 10px;
+}
+
+.avatar {
+  display: block;
+  /* padding: 20px 0px; */
+  width: 100px;
+  min-width: 148px;
+  align-self: center;
+}
+
+.avatar__image {
+  width: 90%;
+  border-radius: 100%;
+}
+
+.bold {
+  font-family: "Rubic One", sans-serif;
+}
+
+.right_block {
+  display: flip;
+}
+
+@media (width <=1440px) {
+  .profile__container {
+    flex-direction: column;
+  }
+}

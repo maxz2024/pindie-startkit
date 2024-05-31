@@ -4,7 +4,7 @@ import { endpoints } from '../api/config';
 
 export const useStore = create((set) => ({
   isAuth: false,
-  user: null,
+  user: undefined,
   token: null,
   login: (user, token) => {
     /* С помощью функции set устанавливаем новое состояние хранилища */
@@ -14,7 +14,7 @@ export const useStore = create((set) => ({
   },
   logout: () => {
     /* Возвращаем изначальные состояния */
-    set({ isAuth: false, user: null, token: null });
+    set({ isAuth: false, user: undefined, token: null });
     /* Удаляем токен */
     removeJWT();
   },

@@ -12,7 +12,6 @@ import { useStore } from "@/app/store/app-store";
 export const Header = () => {
   const [popupIsOpened, setPopupIsOpened] = useState(false);
   const authContext = useStore();
-
   const openPopup = () => {
     setPopupIsOpened(true);
   };
@@ -21,7 +20,7 @@ export const Header = () => {
   };
 
   const handleLogout = () => {
-    authContext.logout()
+    authContext.logout();
   };
 
   const pathname = usePathname();
@@ -108,21 +107,50 @@ export const Header = () => {
             </Link>
           </li>
         </ul>
+        <div className="avatar-block">
+          {authContext.user ? (
+            <Link href="/me" className={Styles["avatar"]}>
+              <img
+                className={Styles["avatar__image"]}
+                src={`/images/${authContext.user.role}.png`}
+                alt="Аватарка админа"
+              />
+            </Link>
+          ) : authContext.user && authContext.user.role == "user" ? (
+            <Link href="/me" className={Styles["avatar"]}>
+              <img
+                className={Styles["avatar__image"]}
+                src="/images/admi.png"
+                alt="Аватарка пользователя"
+              />
+            </Link>
+          ) : (
+            <span className={Styles["avatar"]}>
+              <img
+                className={Styles["avatar__image"]}
+                src="/images/guest.png"
+                alt="Аватарка гостя"
+              />
+            </span>
+          )}
+        </div>
         <div className={Styles["auth"]}>
           {!authContext.isAuth ? (
             <button className={Styles["auth__button"]} onClick={openPopup}>
               Войти
             </button>
           ) : (
-            <button className={Styles["auth__button"]} onClick={handleLogout}>
-              Выйти
-            </button>
+            <Link href="/" className={Styles["auth"]}>
+              <button className={Styles["auth__button"]} onClick={handleLogout}>
+                Выйти
+              </button>
+            </Link>
           )}
         </div>
       </nav>
       <Overlay popupIsOpened={popupIsOpened} closePopup={closePopup} />
       <Popup popupIsOpened={popupIsOpened} closePopup={closePopup}>
-        <AuthForm close={closePopup}/>
+        <AuthForm close={closePopup} />
       </Popup>
     </header>
   );
