@@ -10,7 +10,6 @@ export const Popup = (props) => {
       <button className={Styles["close"]} onClick={props.closePopup}>
         <svg
           className={Styles["close-icon"]}
-          xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 16 25"
         >

@@ -12,7 +12,7 @@ const getData = async (url) => {
   }
 };
 
-export const authorize = async (url, data) => {
+export const login = async (url, data) => {
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -28,6 +28,23 @@ export const authorize = async (url, data) => {
     return error;
   }
 };
+
+export const register = async (url, data) => {
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (response.status !== 200) {
+      throw new Error(( await response.json()).message);
+    }
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    return error;
+  }
+}
 const normalizeDataObject = (obj) => {
   let str = JSON.stringify(obj)
   
