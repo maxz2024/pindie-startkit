@@ -10,6 +10,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="ru">
+      <head>
+        <link rel="icon" href="/icon.svg" sizes="any" />
+      </head>
       <body>
         <App>{children}</App>
       </body>

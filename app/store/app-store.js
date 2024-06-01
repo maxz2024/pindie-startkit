@@ -22,7 +22,7 @@ export const useStore = create((set) => ({
     const jwt = getJWT();
     if (jwt) {
       const user = await getMe(endpoints.getMe, jwt);
-      if (user) {
+      if (user._id) {
         /* Сохраняем полученные данные и токен */
         set({ isAuth: true, user: { ...user, id: user._id }, token: jwt });
         setJWT(jwt);
