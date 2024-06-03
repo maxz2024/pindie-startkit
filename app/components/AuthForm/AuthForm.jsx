@@ -2,10 +2,15 @@
 import { endpoints } from "@/app/api/config";
 import Styles from "./AuthForm.module.css";
 import { useEffect, useState } from "react";
-import { register, isResponseOk, login, setJWT } from "@/app/api/api-utils";
+import {
+  register,
+  isResponseOk,
+  login,
+  setJWT,
+  checkExistLogin,
+} from "@/app/api/api-utils";
 import { useStore } from "@/app/store/app-store";
 import { Preloader } from "../Preloader/Preloader";
-import { ST } from "next/dist/shared/lib/utils";
 
 export const AuthForm = (props) => {
   const [loginData, setLoginData] = useState({ login: "", password: "" });
@@ -16,13 +21,54 @@ export const AuthForm = (props) => {
   });
   const [message, setMessage] = useState({ status: null, text: null });
   const [typeForm, setTypeForm] = useState({ type: "login" });
+  const [checkedData, setCheckedData] = useState({
+    username: null,
+    email: null,
+    password: null,
+  });
   const authContext = useStore();
 
-  const handleInput = (e) => {
+  const setChekedElement = async (name, value) => {
+    const fielMessage = document.querySelector(`#check-${name}`);
+    if (value === "") {
+      fielMessage.innerHTML = "";
+      setCheckedData({ ...checkedData, [name]: null });
+      return;
+    }
+    if (
+      name === "email" &&
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)
+    ) {
+      fielMessage.innerHTML = "Некорректный формат email";
+      setCheckedData({ ...checkedData, email: false });
+      return;
+    } else if (name === "username" && !/^[a-zA-Z0-9_@.]+$/.test(value)) {
+      fielMessage.innerHTML = "Некорректный формат username";
+      setCheckedData({ ...checkedData, username: false });
+      return;
+    }
+    if (name === "password") {
+      if (value.length < 8) {
+        fielMessage.innerHTML = "Некорректный формат password";
+        setCheckedData({ ...checkedData, password: false });
+        return;
+      }
+      fielMessage.innerHTML = " ";
+      setCheckedData({ ...checkedData, password: true });
+      return;
+    }
+
+    const [check, result] = await checkExistLogin(endpoints.checkExists, value);
+    fielMessage.innerHTML = result;
+    setCheckedData({ ...checkedData, [name]: check });
+  };
+
+  const handleInput = async (e) => {
     const { name, value } = e.target;
     if (typeForm.type === "login") {
       setLoginData({ ...loginData, [name]: value });
     } else {
+      setChekedElement(name, value);
       setRegisterData({ ...registerData, [name]: value });
     }
   };
@@ -71,6 +117,7 @@ export const AuthForm = (props) => {
     if (authContext.user) {
       timer = setTimeout(() => {
         setMessage({ status: null, text: null });
+        setCheckedData({ username: null, email: null, password: null });
         props.close();
         setTypeForm({ type: "login" });
       }, 1000);
@@ -84,6 +131,7 @@ export const AuthForm = (props) => {
     setTimeout(() => {
       setTypeForm({ type: e.target.id });
       setMessage({ status: null, message: null });
+      setCheckedData({ username: null, email: null, password: null });
     }, 1000);
   };
 
@@ -161,37 +209,127 @@ export const AuthForm = (props) => {
         <div className={Styles["form"]}>
           <div className={Styles["form__fields"]}>
             <label className={Styles["form__field"]}>
-              <span className={Styles["form__field-title"]}>Ник</span>
-              <input
-                className={Styles["form__field-input"]}
-                name="username"
-                onInput={handleInput}
-                type="text"
-                placeholder="Ivan"
-                autocomplete="name"
-              />
+              <span className={Styles["form__field-title"]}>
+                Ник{" "}
+                <span
+                  className={Styles["help-message"]}
+                  data-title="Разрешены только английские буквы, символы: '@', '_', '.'"
+                >
+                  ?
+                </span>
+              </span>
+              <div className={Styles["input__block"]}>
+                <input
+                  className={Styles["form__field-input"]}
+                  style={{ border: "none", outline: "none" }}
+                  name="username"
+                  onInput={handleInput}
+                  type="text"
+                  placeholder="Ivan"
+                  autocomplete="username"
+                />
+                {checkedData.username ? (
+                  <img
+                    className={Styles["check__image"]}
+                    src="/images/yes.webp"
+                  ></img>
+                ) : checkedData.username === null ? (
+                  ""
+                ) : (
+                  <img
+                    className={Styles["check__image"]}
+                    src="/images/no.webp"
+                  ></img>
+                )}
+              </div>
+              <p
+                className={`${Styles["checked__message"]} ${
+                  !checkedData.username ? Styles["checked__error"] : ""
+                }`}
+                id="check-username"
+              ></p>
             </label>
             <label className={Styles["form__field"]}>
-              <span className={Styles["form__field-title"]}>Email</span>
-              <input
-                className={Styles["form__field-input"]}
-                name="email"
-                onInput={handleInput}
-                type="email"
-                placeholder="hello@world.com"
-                autocomplete="email"
-              />
+              <span className={Styles["form__field-title"]}>
+                Email{" "}
+                <span
+                  className={Styles["help-message"]}
+                  data-title="Формат почты hello@world.com"
+                >
+                  ?
+                </span>
+              </span>
+              <div className={Styles["input__block"]}>
+                <input
+                  className={Styles["form__field-input"]}
+                  style={{ border: "none", outline: "none" }}
+                  name="email"
+                  onInput={handleInput}
+                  type="text"
+                  placeholder="hello@world.com"
+                  autocomplete="email"
+                />
+                {checkedData.email ? (
+                  <img
+                    className={Styles["check__image"]}
+                    src="/images/yes.webp"
+                  ></img>
+                ) : checkedData.email === null ? (
+                  ""
+                ) : (
+                  <img
+                    className={Styles["check__image"]}
+                    src="/images/no.webp"
+                  ></img>
+                )}
+              </div>
+              <p
+                className={`${Styles["checked__message"]} ${
+                  !checkedData.email ? Styles["checked__error"] : ""
+                }`}
+                id="check-email"
+              ></p>
             </label>
             <label className={Styles["form__field"]}>
-              <span className={Styles["form__field-title"]}>Пароль</span>
-              <input
-                className={Styles["form__field-input"]}
-                name="password"
-                onInput={handleInput}
-                type="password"
-                placeholder="***********"
-                autoComplete="new-password"
-              />
+              <span className={Styles["form__field-title"]}>
+                Пароль{" "}
+                <span
+                  className={Styles["help-message"]}
+                  data-title="Длина пароля от 8 символов"
+                >
+                  ?
+                </span>
+              </span>
+              <div className={Styles["input__block"]}>
+                <input
+                  className={Styles["form__field-input"]}
+                  style={{ border: "none", outline: "none" }}
+                  name="password"
+                  onInput={handleInput}
+                  type="password"
+                  placeholder="***********"
+                  autoComplete="new-password"
+                />
+                {checkedData.password ? (
+                  <img
+                    className={Styles["check__image"]}
+                    src="/images/yes.webp"
+                  ></img>
+                ) : checkedData.password === null ? (
+                  ""
+                ) : (
+                  <img
+                    className={Styles["check__image"]}
+                    src="/images/no.webp"
+                  ></img>
+                )}
+              </div>
+              <p
+                className={`${Styles["checked__message"]} ${
+                  !checkedData.password ? Styles["checked__error"] : ""
+                }`}
+                id="check-password"
+              ></p>
             </label>
           </div>
           <p className={Styles["forms__message"]}>
@@ -210,6 +348,13 @@ export const AuthForm = (props) => {
             <button
               className={Styles["form__submit"]}
               onClick={handleSubmitAuth}
+              disabled={
+                !(
+                  checkedData.email &&
+                  checkedData.username &&
+                  checkedData.password
+                )
+              }
             >
               Регистрация
             </button>

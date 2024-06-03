@@ -29,6 +29,22 @@ export const login = async (url, data) => {
   }
 };
 
+export const checkExistLogin = async (url,login) => {
+  try {
+    const response = await fetch(`${url}/${login}`, {
+      method: "GET",
+      headers: { "Content-type": "application/json" },
+    });
+    if (response.status !== 200) {
+      throw new Error((await response.json()).message);
+    }
+    const result = await response.json()
+    return [true, result.message];
+  } catch (error) {
+    return [false, error.message];
+  }
+}
+
 export const register = async (url, data) => {
   try {
     const response = await fetch(url, {
