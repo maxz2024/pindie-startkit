@@ -22,7 +22,7 @@ export const Footer = () => {
       <ul className={Styles["social-list"]}>
         <li className="social-list__item">
           <a
-            href="https://www.youtube.com/@YandexPracticum"
+            href="https://www.youtube.com/watch?si=irGh-h1koLDuhtGj&v=dQw4w9WgXcQ&feature=youtu.be"
             className={`button ${Styles["social-list__link"]}`}
           >
             YT
@@ -30,7 +30,7 @@ export const Footer = () => {
         </li>
         <li className="social-list__item">
           <a
-            href="https://vk.com/yandex.practicum"
+            href="https://vk.com/maxz2024"
             className={`button ${Styles["social-list__link"]}`}
           >
             ВК
@@ -38,7 +38,7 @@ export const Footer = () => {
         </li>
         <li className="social-list__item">
           <a
-            href="https://t.me/yndx_practicum"
+            href="https://t.me/maxz2024"
             className={`button ${Styles["social-list__link"]}`}
           >
             TG
