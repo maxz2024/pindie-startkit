@@ -1,4 +1,4 @@
-export const BASE_URL = "https://pindie-backend-maxz2024.nomoredomainswork.ru/api";
+export const BASE_URL = "https://uniquely-sleek-fawn.cloudpub.ru:443/api";
 
 export const endpoints = {
   games: `${BASE_URL}/games`,
