@@ -36,3 +36,5 @@ yarn-error.log*
 next-env.d.ts
 /app/components/test.jsx
 package-lock.json
+
+config.js
